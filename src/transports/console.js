@@ -4,16 +4,19 @@
 
 var transform = require('../transform');
 
-var consoleMethods = {
-  context: console,
-  error:   console.error,
-  warn:    console.warn,
-  info:    console.info,
-  verbose: console.verbose,
-  debug:   console.debug,
-  silly:   console.silly,
-  log:     console.log,
-};
+// var consoleMethods = {
+//   context: console,
+//   error:   console.error,
+//   warn:    console.warn,
+//   info:    console.info,
+//   verbose: console.verbose,
+//   debug:   console.debug,
+//   silly:   console.silly,
+//   log:     console.log,
+// };
+
+var consoleMethods = console;
+console.context = console;
 
 module.exports = consoleTransportFactory;
 module.exports.transformRenderer = transformRenderer;
@@ -27,7 +30,7 @@ var DEFAULT_FORMAT = {
 };
 
 function consoleTransportFactory(electronLog) {
-  transport.level  = 'silly';
+  transport.level = 'silly';
   transport.useStyles = process.env.FORCE_STYLES;
   transport.format = DEFAULT_FORMAT[process.type] || DEFAULT_FORMAT.browser;
 
@@ -103,8 +106,8 @@ function consoleLog(level, args) {
 function levelToStyle(level) {
   switch (level) {
     case 'error': return 'red';
-    case 'warn':  return 'yellow';
-    case 'info':  return 'cyan';
-    default:      return 'unset';
+    case 'warn': return 'yellow';
+    case 'info': return 'cyan';
+    default: return 'unset';
   }
 }
